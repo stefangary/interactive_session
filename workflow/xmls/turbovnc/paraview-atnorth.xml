@@ -4,7 +4,7 @@
     <param name='_pw_service_name' label='Service Name' type='hidden' value='nicedcv' width='50%_none'></param>
     <param name='_pw_servicePort' label='Service Port' type='hidden' value='8443' width='50%_none'></param>
     <param name='_pw_service_display' label='Service Display' type='hidden' value='2' width='50%_none'></param>
-    <param name='_pw_service_is_running' label='Service Display' type='hidden' value='True' width='50%_none'></param>
+    <param name='_pw_service_is_running' label='Service Is Running' type='hidden' value='True' width='50%_none'></param>
     <param name='_pw_jobschedulertype' label='Service Scheduler Type' type='hidden' value='SLURM' width='50%_none'></param>
     <param name='_pw__sch__dd_partition_e_' label='Service Partition' type='hidden' value='vnc' width='50%_none'></param>
     <param name='_pw_scheduler_directives' label='Service Directives' type='hidden' value='--exclusive' width='50%_none'></param>
