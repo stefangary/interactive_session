@@ -8,8 +8,8 @@ slurm_module=__slurm_module__
 service_bin="$(echo __service_bin__  | sed "s|---| |g" | sed "s|___| |g")"
 service_background=__service_background__ # Launch service as a background process
 chdir=__chdir__
-service_is_running=_service_is_running_
-service_display=_service_display_
+service_is_running=__service_is_running__
+service_display=__service_display__
 
 if [ -z $(which dcv) ]; then
     echo "Installing Nice DCV"
