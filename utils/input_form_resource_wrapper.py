@@ -348,7 +348,7 @@ def create_batch_header(inputs_dict, header_sh):
     jobnumber = os.path.basename(os.getcwd())
     workflow_name = os.path.basename(os.path.dirname(os.getcwd()))
     jobdir = inputs_dict['resource']['jobdir']
-    scheduler_directives += [f'-o ~/script.out', f'-e ~/script.out'] # [f'-o {jobdir}/script.out', f'-e {jobdir}/script.out']
+    scheduler_directives += [f'-o ~/script.out', f'-e ~/test/script.out'] # [f'-o {jobdir}/script.out', f'-e {jobdir}/script.out']
     jobschedulertype = inputs_dict['jobschedulertype']
     jobname = f"{workflow_name}-{jobnumber}"
 
