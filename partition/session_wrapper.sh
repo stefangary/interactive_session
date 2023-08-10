@@ -45,6 +45,9 @@ fi
 $sshcmd cp "~/.ssh/id_rsa.pub" ${remote_session_dir}
 
 cat >> ${session_sh} <<HERE
+
+mkdir -p ${resource_jobdir}
+
 echo "Running in host \$(hostname)"
 sshusercontainer="ssh -J ${resource_privateIp} -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null ${USER_CONTAINER_HOST}"
 
