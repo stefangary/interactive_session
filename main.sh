@@ -15,16 +15,16 @@ source /etc/profile.d/parallelworks-env.sh
 source /pw/.miniconda3/etc/profile.d/conda.sh
 conda activate
 
-if [ -f "/swift-pw-bin/utils/input_form_resource_wrapper.py" ]; then
-    version=$(cat /swift-pw-bin/utils/input_form_resource_wrapper.py | grep VERSION | cut -d':' -f2)
-    if [ -z "$version" ] || [ "$version" -lt 2 ]; then
-        python utils/input_form_resource_wrapper.py
-    else
-        python /swift-pw-bin/utils/input_form_resource_wrapper.py
-    fi
-else
-    python utils/input_form_resource_wrapper.py
-fi
+# if [ -f "/swift-pw-bin/utils/input_form_resource_wrapper.py" ]; then
+#     version=$(cat /swift-pw-bin/utils/input_form_resource_wrapper.py | grep VERSION | cut -d':' -f2)
+#     if [ -z "$version" ] || [ "$version" -lt 2 ]; then
+#         python utils/input_form_resource_wrapper.py
+#     else
+#         python /swift-pw-bin/utils/input_form_resource_wrapper.py
+#     fi
+# else
+python utils/input_form_resource_wrapper.py
+#fi
 
 if ! [ -f "resources/host/inputs.sh" ]; then
     displayErrorMessage "ERROR - Missing file ./resources/host/inputs.sh. Resource wrapper failed"
