@@ -28,6 +28,7 @@ if ! [ -z ${RUNTIME_FIXES} ]; then
 fi
 
 # SET SESSIONS' REMOTE DIRECTORY
+echo ${sshcmd} mkdir -p ${resource_jobdir}
 ${sshcmd} mkdir -p ${resource_jobdir}
 remote_session_dir=${resource_jobdir}
 
