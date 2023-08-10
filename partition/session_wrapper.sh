@@ -45,6 +45,10 @@ $sshcmd cp "~/.ssh/id_rsa.pub" ${remote_session_dir}
 
 cat >> ${session_sh} <<HERE
 echo "Running in host \$(hostname)"
+
+# create the job directory in case homedir is not shared
+mkdir -p \${resource_jobdir}
+
 sshusercontainer="ssh -J ${resource_privateIp} -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null ${USER_CONTAINER_HOST}"
 
 displayErrorMessage() {
