@@ -43,9 +43,6 @@ fi
 # MAKE SURE CONTROLLER NODES HAVE SSH ACCESS TO COMPUTE NODES:
 $sshcmd cp "~/.ssh/id_rsa.pub" ${remote_session_dir}
 
-# create jobdir if non-shared home filesystem
-$sshcmd mkdir -p ${remote_session_dir}
-
 cat >> ${session_sh} <<HERE
 echo "Running in host \$(hostname)"
 sshusercontainer="ssh -J ${resource_privateIp} -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null ${USER_CONTAINER_HOST}"
