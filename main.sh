@@ -15,16 +15,16 @@ source /etc/profile.d/parallelworks-env.sh
 source /pw/.miniconda3/etc/profile.d/conda.sh
 conda activate
 
-# if [ -f "/swift-pw-bin/utils/input_form_resource_wrapper.py" ]; then
-#     version=$(cat /swift-pw-bin/utils/input_form_resource_wrapper.py | grep VERSION | cut -d':' -f2)
-#     if [ -z "$version" ] || [ "$version" -lt 2 ]; then
-#         python utils/input_form_resource_wrapper.py
-#     else
-#         python /swift-pw-bin/utils/input_form_resource_wrapper.py
-#     fi
-# else
-python utils/input_form_resource_wrapper.py
-#fi
+if [ -f "/swift-pw-bin/utils/input_form_resource_wrapper.py" ]; then
+    version=$(cat /swift-pw-bin/utils/input_form_resource_wrapper.py | grep VERSION | cut -d':' -f2)
+    if [ -z "$version" ] || [ "$version" -lt 3 ]; then
+        python utils/input_form_resource_wrapper.py
+    else
+        python /swift-pw-bin/utils/input_form_resource_wrapper.py
+    fi
+else
+    python utils/input_form_resource_wrapper.py
+fi
 
 if ! [ -f "resources/host/inputs.sh" ]; then
     displayErrorMessage "ERROR - Missing file ./resources/host/inputs.sh. Resource wrapper failed"
@@ -47,9 +47,16 @@ fi
 echo "export openPort=${openPort}" >> inputs.sh
 export sshcmd="ssh -o StrictHostKeyChecking=no ${resource_publicIp}"
 echo "export sshcmd=\"${sshcmd}\"" >> inputs.sh 
+# The resource wrapper only replaces placeholders in resource sections of the input form
+# Therefore, we need to replace this here as well:
 sed -i "s|__WORKDIR__|${resource_workdir}|g" inputs.sh
-source inputs.sh
+sed -i "s|__workdir__|${resource_workdir}|g" inputs.sh
+sed -i "s|__PW_USER__|${PW_USER}|g" inputs.sh
+sed -i "s|__pw_user__|${PW_USER}|g" inputs.sh
+sed -i "s|__USER__|${resource_username}|g" inputs.sh
+sed -i "s|__user__|${resource_username}|g" inputs.sh
 
+source inputs.sh
 
 # Obtain the service_name from any section of the XML
 export service_name=$(cat inputs.sh | grep service_name | cut -d'=' -f2 | tr -d '"')
