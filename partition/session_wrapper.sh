@@ -188,6 +188,11 @@ chmod 777 ${kill_sh}
 echo
 echo "Submitted slurm job: ${jobid}"
 
+source /etc/profile.d/parallelworks-env.sh
+curl -s \
+    -X POST -H "Content-Type: application/json" \
+    -d "{\"title\": \"Interactive workflow ${workflow_name} job ${job_number} is running\", \"href\": \"${url}\"}" \
+    https://${PW_PLATFORM_HOST}/api/v2/notifications?key=${PW_API_KEY} &> /dev/null
 
 # Job status file writen by remote script:
 while true; do    
