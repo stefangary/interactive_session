@@ -207,6 +207,8 @@
 # bootstrap_tgz ${novnc_tgz} ${novnc_dir}
 # cd ${novnc_dir}
 
+displayPort=5900
+
 /opt/noVNC-1.4.0/utils/novnc_proxy --vnc localhost:${displayPort} --listen localhost:${servicePort} </dev/null &>/dev/null &
 echo $! >> ${resource_jobdir}/service.pid
 pid=$(ps -x | grep vnc | grep ${displayPort} | awk '{print $1}')
