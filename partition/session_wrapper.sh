@@ -215,6 +215,6 @@ while true; do
             break
         fi
     fi
-    sleep 60
+    sleep 10
 done
 
