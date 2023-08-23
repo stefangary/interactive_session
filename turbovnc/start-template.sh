@@ -193,8 +193,10 @@ if ! [[ $kernel_version == *microsoft* ]]; then
         # FIXME: Code below fails to launch desktop session
         #        Use case in onyx automatically launches the session when visual apps are launched
         echo Found icewm-session
-        #icewm-session &
-        #echo $! > ${resource_jobdir}/service.pid
+        if [ -z "${service_bin}" ]; then
+            icewm-session &
+            echo $! > ${resource_jobdir}/service.pid
+        fi
     elif ! [ -z $(which gnome) ]; then
         gnome &
         echo $! > ${resource_jobdir}/service.pid
