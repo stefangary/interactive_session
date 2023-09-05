@@ -6,7 +6,7 @@ import subprocess
 import time
 import random
 import socket
-# VERSION: 8
+# VERSION: 9
 
 """
 # Form Resource Wrapper
@@ -422,7 +422,13 @@ if __name__ == '__main__':
     
     for label in resource_labels:
         logger.info(f'Preparing resource <{label}>')
+        # Copy only the resource information corresponding to the resource label
         label_inputs_dict = inputs_dict[f'pwrl_{label}']
+        # Copy every other input with no resource label
+        for key, value in inputs_dict.items():
+            if not key.startswith('pwrl_'):
+                label_inputs_dict[key] = value
+
         label_inputs_dict = complete_resource_information(label_inputs_dict)
         logger.info(json.dumps(label_inputs_dict, indent = 4))
         create_resource_directory(label, label_inputs_dict)
