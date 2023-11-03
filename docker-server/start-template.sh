@@ -27,7 +27,7 @@ server {
  add_header 'Access-Control-Allow-Headers' 'Authorization,Content-Type,Accept,Origin,User-Agent,DNT,Cache-Control,X-Mx-ReqToken,Keep-Alive,X-Requested-With,If-Modified-Since';
  add_header X-Frame-Options "ALLOWALL";
  location / {
-     proxy_pass http://127.0.0.1:${service_local_port}/me/${openPort}/;
+     proxy_pass http://127.0.0.1:${service_local_port};
      proxy_http_version 1.1;
        proxy_set_header Upgrade \$http_upgrade;
        proxy_set_header Connection "upgrade";
