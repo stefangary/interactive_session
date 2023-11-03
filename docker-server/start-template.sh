@@ -17,35 +17,21 @@ service_local_port=$(findAvailablePort)
 
 echo "Starting nginx wrapper on service port ${servicePort}"
 
-# Write config file
-#cat >> config.conf <<HERE
-#server {
-# listen ${servicePort};
-# server_name _;
-# index index.html index.htm index.php;
-# add_header 'Access-Control-Allow-Methods' 'GET, POST, OPTIONS';
-# add_header 'Access-Control-Allow-Headers' 'Authorization,Content-Type,Accept,Origin,User-Agent,DNT,Cache-Control,X-Mx-ReqToken,Keep-Alive,X-Requested-With,If-Modified-Since';
-# add_header X-Frame-Options "ALLOWALL";
-# location / {
-#     proxy_pass http://127.0.0.1:${service_local_port}/me/${openPort}/;
-#     proxy_http_version 1.1;
-#       proxy_set_header Upgrade \$http_upgrade;
-#       proxy_set_header Connection "upgrade";
-#       proxy_set_header X-Real-IP \$remote_addr;
-#       proxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;
-#       proxy_set_header Host \$http_host;
-#       proxy_set_header X-NginX-Proxy true;
-# }
-#}
-#HERE
-
-"""
+# Config file obtained from https://docs.posit.co/ide/server-pro/access_and_security/running_with_a_proxy.html#nginx-configuration
 cat >> config.conf <<HERE
+http {
+
+  # Support proxying of web-socket connections
+  map \$http_upgrade \$connection_upgrade {
+    default upgrade;
+    ''      close;
+  }
+  
   server {
     listen ${servicePort};
     
     location /me/${openPort}/ {
-      # Needed only for a custom path prefix of  /me/${openPort}
+      # Needed only for a custom path prefix of /me/${openPort}
       rewrite ^/me/${openPort}(.*)$ /\$1 break;
 
       # Use http here when ssl-enabled=0 is set in rserver.conf
@@ -66,38 +52,10 @@ cat >> config.conf <<HERE
   }
 }
 HERE
-"""
-
-#2023/11/03 13:14:45 [error] 30#30: *47 "/etc/nginx/html/index.html" is not found (2: No such file or directory), client: 127.0.0.1, server: , request: "GET / HTTP/1.1", host: "cloud-user-private-1.parallel.works", referrer: "https://cloud.parallel.works/workflows/docker_server?jobId=6544f04ba679e25294c92dc6"
-#127.0.0.1 - - [03/Nov/2023:13:14:45 +0000] "GET / HTTP/1.1" 404 555 "https://cloud.parallel.works/workflows/docker_server?jobId=6544f04ba679e25294c92dc6" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36" "10.34.1.85"
-
-# Write config file
-cat >> config.conf <<HERE
-server {
- listen ${servicePort};
- server_name _;
- index index.html index.htm index.php;
- add_header 'Access-Control-Allow-Methods' 'GET, POST, OPTIONS';
- add_header 'Access-Control-Allow-Headers' 'Authorization,Content-Type,Accept,Origin,User-Agent,DNT,Cache-Control,X-Mx-ReqToken,Keep-Alive,X-Requested-With,If-Modified-Since';
- add_header X-Frame-Options "ALLOWALL";
- location / {
-    proxy_pass http://127.0.0.1:${service_local_port}/me/${openPort}/;
-    rewrite ^/me/${openPort}(.*)$ /\$1 break;
-    proxy_http_version 1.1;
-    proxy_set_header Upgrade \$http_upgrade;
-    proxy_set_header Connection "upgrade";
-    proxy_set_header X-Real-IP \$remote_addr;
-    proxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;
-    proxy_set_header Host \$http_host;
-    proxy_set_header X-RStudio-Root-Path /me/${openPort};
-    proxy_set_header X-NginX-Proxy true;
- }
-}
-HERE
 
 nginx_container_name="nginx-${servicePort}"
 sudo service docker start
-sudo docker run -d --name ${nginx_container_name}  -v $PWD/config.conf:/etc/nginx/conf.d/config.conf --network=host nginx
+sudo docker run -d --name ${nginx_container_name}  -v $PWD/config.conf:/etc/nginx/config.conf --network=host nginx
 # Print logs
 sudo docker logs ${container_name}
 
