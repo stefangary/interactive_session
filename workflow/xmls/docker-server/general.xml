@@ -3,7 +3,7 @@
   <cancel interpreter='bash'>kill.sh</cancel>
   <inputs>
     <section name='service' type='section' title='Docker Server' expanded='true'>
-        <param name='name' label='Service' type='hidden' value='docker-server'  ></param>
+        <param name='name' label='Service' type='hidden' value='docker_server'  ></param>
         <param 
           name='docker_repo' 
           label='Docker Repository' 
