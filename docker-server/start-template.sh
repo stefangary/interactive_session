@@ -51,9 +51,9 @@ http {
   server {
     listen ${servicePort};
     
-    location /rstudio/ {
-      # Needed only for a custom path prefix of /rstudio
-      rewrite ^/rstudio(.*)$ /$1 break;
+    location /me/${openPort}/ {
+      # Needed only for a custom path prefix of  /me/${openPort}
+      rewrite ^/me/${openPort}(.*)$ /$1 break;
 
       # Use http here when ssl-enabled=0 is set in rserver.conf
       proxy_pass http://localhost:${service_local_port};
