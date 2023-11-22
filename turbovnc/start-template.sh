@@ -209,13 +209,15 @@ fi
 
 cd ${novnc_dir}
 
+./utils/novnc_proxy --vnc localhost:${displayPort} --listen localhost:${servicePort} </dev/null &>/dev/null &
+echo $! >> ${resource_jobdir}/service.pid
+pid=$(ps -x | grep vnc | grep ${displayPort} | awk '{print $1}')
+echo ${pid} >> ${resource_jobdir}/service.pid
+rm -f ${portFile}
+sleep 5 # Need this specially in controller node or second software won't show up!
+
 # Launch service
 cd
-echo "DEBUG DEBUG DEBUG"
-echo "DEBUG DEBUG DEBUG"
-echo "DEBUG DEBUG DEBUG"
-echo "DEBUG DEBUG DEBUG"
-echo ${service_bin}
 if ! [ -z "${service_bin}" ]; then
     if [[ ${service_background} == "False" ]]; then
         echo "Running ${service_bin}"
@@ -226,13 +228,5 @@ if ! [ -z "${service_bin}" ]; then
         echo $! >> ${resource_jobdir}/service.pid
     fi
 fi
-
-./utils/novnc_proxy --vnc localhost:${displayPort} --listen localhost:${servicePort} </dev/null &>/dev/null &
-echo $! >> ${resource_jobdir}/service.pid
-pid=$(ps -x | grep vnc | grep ${displayPort} | awk '{print $1}')
-echo ${pid} >> ${resource_jobdir}/service.pid
-rm -f ${portFile}
-sleep 5 # Need this specially in controller node or second software won't show up!
-
-
+    
 sleep 99999

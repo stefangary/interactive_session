@@ -7,6 +7,7 @@
     <param name='service_name' label='Service' type='hidden' value='turbovnc'  ></param>
     <param name='service_load_env' label='Command to load Jupyter' type='text' value='source /gs/gsfs0/hpc01/rhel8/apps/conda3/etc/profile.d/conda.sh; conda activate base; module load cuda' help='To load the environment, enter the appropriate command, for example: module load module-name or source path/to/env.sh.'  ></param>
     <param name='service_bin' label='Service binary' type='hidden' value='jupyter notebook'  ></param>
+    <param name='service_background' label='Run service in background' type='hidden' value='False'></param>
     <section name='pwrl_host' type='section' title='Jupyter Host' expanded='true'>
       <param name='resource' type='computeResource' label='Service host' hideUserWorkspace='true' help='Resource to host the service'></param>
       <param name='nports' label='Number of Ports to Reserve' type='hidden' value='1'  ></param>       
