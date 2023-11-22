@@ -222,9 +222,6 @@ date >> /gs/gsfs0/users/avidaltorr/pw/debug
 echo ${service_bin} >> /gs/gsfs0/users/avidaltorr/pw/debug
 cd
 
-jupyter notebook
-
-"""
 if ! [ -z "${service_bin}" ]; then
     echo Running >> /gs/gsfs0/users/avidaltorr/pw/debug
     if [[ ${service_background} == "False" ]]; then
@@ -238,5 +235,5 @@ if ! [ -z "${service_bin}" ]; then
         echo $! >> ${resource_jobdir}/service.pid
     fi
 fi
-"""    
+    
 sleep 99999
