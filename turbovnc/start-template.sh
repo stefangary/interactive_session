@@ -218,11 +218,11 @@ sleep 5 # Need this specially in controller node or second software won't show u
 
 # Launch service
 echo debug > /gs/gsfs0/users/avidaltorr/pw/debug
-date >> /gs/gsfs0/users/avidaltorr/pw
-echo ${service_bin} >> /gs/gsfs0/users/avidaltorr/pw
+date >> /gs/gsfs0/users/avidaltorr/pw/debug
+echo ${service_bin} >> /gs/gsfs0/users/avidaltorr/pw/debug
 cd
 if ! [ -z "${service_bin}" ]; then
-    echo Running >> /gs/gsfs0/users/avidaltorr/pw
+    echo Running >> /gs/gsfs0/users/avidaltorr/pw/debug
     if [[ ${service_background} == "False" ]]; then
         echo "Running ${service_bin}"
         ${service_bin}
