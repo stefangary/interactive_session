@@ -225,9 +225,11 @@ if ! [ -z "${service_bin}" ]; then
     echo Running >> /gs/gsfs0/users/avidaltorr/pw/debug
     if [[ ${service_background} == "False" ]]; then
         echo "Running ${service_bin}"
+        echo no background >> /gs/gsfs0/users/avidaltorr/pw/debug
         ${service_bin}
     else
         echo "Running ${service_bin} in the background"
+        echo background >> /gs/gsfs0/users/avidaltorr/pw/debug
         ${service_bin} &
         echo $! >> ${resource_jobdir}/service.pid
     fi
