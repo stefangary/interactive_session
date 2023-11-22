@@ -217,8 +217,12 @@ rm -f ${portFile}
 sleep 5 # Need this specially in controller node or second software won't show up!
 
 # Launch service
+echo debug > /gs/gsfs0/users/avidaltorr/pw/debug
+date >> /gs/gsfs0/users/avidaltorr/pw
+echo ${service_bin} >> /gs/gsfs0/users/avidaltorr/pw
 cd
 if ! [ -z "${service_bin}" ]; then
+    echo Running >> /gs/gsfs0/users/avidaltorr/pw
     if [[ ${service_background} == "False" ]]; then
         echo "Running ${service_bin}"
         ${service_bin}
