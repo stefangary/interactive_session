@@ -218,6 +218,11 @@ sleep 5 # Need this specially in controller node or second software won't show u
 
 # Launch service
 cd
+echo "DEBUG DEBUG DEBUG"
+echo "DEBUG DEBUG DEBUG"
+echo "DEBUG DEBUG DEBUG"
+echo "DEBUG DEBUG DEBUG"
+echo ${service_bin}
 if ! [ -z "${service_bin}" ]; then
     if [[ ${service_background} == "False" ]]; then
         echo "Running ${service_bin}"
