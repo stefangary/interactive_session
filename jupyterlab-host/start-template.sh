@@ -44,7 +44,8 @@ f_set_up_conda_from_yaml() {
     echo "Sourcing Conda SH <${CONDA_SH}>"
     source ${CONDA_SH}
 
-    conda env create -n ${CONDA_ENV} -f ${CONDA_YAML}
+    # Update instead of create in case user specifies base environment
+    conda env update -n ${CONDA_ENV} -f ${CONDA_YAML}
 
     echo "Activating Conda Environment <${CONDA_ENV}>"
     conda activate ${CONDA_ENV}
