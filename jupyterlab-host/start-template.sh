@@ -15,8 +15,11 @@ echo "rm /tmp/${jupyterlab_port}.port.used" >> cancel.sh
 
 f_install_miniconda() {
     install_dir=$1
-    echo "Installing Miniconda3-py39_4.9.2"
-    conda_repo="https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh"
+    miniconda_version="Miniconda3-latest-Linux-x86_64.sh"
+    # Alternative is to pin to a specific version
+    #miniconda_version="Miniconda3-py311_23.11.0-2-Linux-x86_64.sh"
+    echo "Installing $miniconda_version"
+    conda_repo="https://repo.anaconda.com/miniconda/$miniconda_version"
     ID=$(date +%s)-${RANDOM} # This script may run at the same time!
     nohup wget ${conda_repo} -O /tmp/miniconda-${ID}.sh 2>&1 > /tmp/miniconda_wget-${ID}.out
     rm -rf ${install_dir}
